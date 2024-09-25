@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Define color codes
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
 # Set the input directory to the first argument or current directory if not provided
 INPUT_DIR=${1:-.}
 
@@ -12,11 +18,14 @@ find "$INPUT_DIR" -type f \( -name "*.cue" -o -name "*.gdi" -o -name "*.iso" \) 
     file_dir=$(dirname "$file")
     
     # Print the filename and path of the input file
-    echo "Processing file: $file"
+    echo -e "${CYAN}Processing file: $file${NC}"
     
     # Display the current running command
-    echo "Running: chdman createcd -i \"$file\" -o \"$file_dir/$filename.chd\""
+    echo -e "${YELLOW}Running: chdman createcd -i \"$file\" -o \"$file_dir/$filename.chd\"${NC}"
     
     # Run the chdman command
     chdman createcd -i "$file" -o "$file_dir/$filename.chd"
+    
+    # Print success message
+    echo -e "${GREEN}Successfully processed: $file${NC}"
 done
